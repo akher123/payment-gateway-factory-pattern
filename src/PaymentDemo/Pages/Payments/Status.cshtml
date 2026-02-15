@@ -1,0 +1,93 @@
+@page
+@model PaymentDemo.Pages.Payments.StatusModel
+
+@{
+    ViewData["Title"] = "Payment Status";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Payment Status</h4>
+                </div>
+
+                <div class="card-body">
+
+                    @if (Model.NotFound)
+                    {
+                        <div class="alert alert-danger">
+                            <strong>Transaction not found</strong><br />
+                            OrderId: <b>@Model.OrderId</b>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">OrderId</label>
+                            <div class="form-control bg-light">@Model.OrderId</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Provider</label>
+                            <div class="form-control bg-light">@Model.Provider</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Status</label>
+                            <div class="form-control bg-light">
+                                @if (Model.CurrentStatus?.ToString() == "Paid")
+                                {
+                                    <span class="badge bg-success fs-6">
+                                        @Model.CurrentStatus
+                                    </span>
+                                }
+                                else if (Model.CurrentStatus?.ToString() == "Failed")
+                                {
+                                    <span class="badge bg-danger fs-6">
+                                        @Model.CurrentStatus
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning text-dark fs-6">
+                                        @Model.CurrentStatus
+                                    </span>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Provider Ref</label>
+                            <div class="form-control bg-light">@Model.ProviderRef</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Amount</label>
+                            <div class="form-control bg-light">
+                                @Model.Amount @Model.Currency
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Created</label>
+                            <div class="form-control bg-light">
+                                @Model.CreatedAtUtc.ToString("u")
+                            </div>
+                        </div>
+                    }
+
+                    <div class="d-grid">
+                        <a asp-page="/Payments/Create" class="btn btn-outline-primary btn-lg">
+                            Create Another Payment
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
